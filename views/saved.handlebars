@@ -3,7 +3,7 @@
   <nav>
     <div class="nav-wrapper teal">
       <a href="#" class="brand-logo">Mongo Scraper</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <ul class="hide-on-med-and-down">
         <li><a href="/">Home</a></li>
         <li><a href="/saved">Saved Articles</a></li>
       </ul>
@@ -17,7 +17,18 @@
     <a class="red waves-effect waves-light btn">Clear Articles</a>
   </div>
 
-  <div class="row">
+
+<div class="row no-articles">
+    <div class="col s12">
+      <div class="card teal">
+        <div class="card-content white-text">
+          <span class="card-title">Uh Oh. Looks like we don't have any saved articles.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row article">
     <div class="col s12">
       <div class="card teal">
         <div class="card-content white-text">
@@ -27,9 +38,66 @@
         </div>
         <div class="card-action">
           <a class="red waves-effect waves-light btn">Delete From Saved</a>
-          <a class="red waves-effect waves-light btn">Article Notes</a>
+          <a class="red waves-effect waves-light btn" onclick="$('#modal1').modal().modal('open');">Article Notes</a>
         </div>
       </div>
+    </div>
+  </div>
+
+   <div class="row article">
+    <div class="col s12">
+      <div class="card teal">
+        <div class="card-content white-text">
+          <span class="card-title">I am a very simple card. I am good at containing small bits of information.</span>
+          <p>I am a very simple card. I am good at containing small bits of information.
+            I am convenient because I require little markup to use effectively.</p>
+        </div>
+        <div class="card-action">
+          <a class="red waves-effect waves-light btn">Delete From Saved</a>
+          <a class="red waves-effect waves-light btn" onclick="$('#modal1').modal().modal('open');">Article Notes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal forms -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <div class="note-card card-panel teal">
+        <span class="white-text">I am a very simple card. 
+          I am good at containing small bits of information.
+          I am a very simple card. 
+          I am good at containing small bits of information.
+        </span>
+         <a class="btn-floating red btn btn-small waves-effect waves-light remove-note-button">
+           <i class='material-icons'>delete</i>
+         </a>
+        </div>
+         <div class="note-card card-panel teal">
+        <span class="white-text">I am a very simple card. 
+          I am good at containing small bits of information.
+          I am a very simple card. 
+          I am good at containing small bits of information.
+        </span>
+         <a class="btn-floating red btn btn-small waves-effect waves-light remove-note-button">
+           <i class='material-icons'>delete</i>
+         </a>
+        </div>
+        <br>
+      <h5>Add a note: </h5>
+      <div class="row">
+        <form>
+          <div class="row">
+            <div class="input-field col l6 s12">
+              <textarea class="materialize-textarea"></textarea>
+            </div>
+          </div>
+          <a class="btn waves-effect waves-light">Add</a>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
     </div>
   </div>
 

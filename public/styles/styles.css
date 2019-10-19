@@ -22,8 +22,8 @@
     margin-left: 20px;
   }
 
-  #nav-mobile {
-    margin-right: 20px;
+  .hide-on-med-and-down {
+    margin-left: 300px;
   }
 
   /* sticky footer */
@@ -38,3 +38,33 @@
   }
   /* sticky footer */
 
+  footer {
+    margin-top: 50px;
+  }
+
+  #footer-content {
+    margin-left: 15px;
+  } 
+
+  #footer-space {
+    height: 50px;
+  }
+
+  .note-card {
+    position: relative;
+  }
+  
+  .remove-note-button {
+    position: absolute; 
+    top: 5px; 
+    right: 5px;
+  }
+
+  .no-articles {
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .article {
+    margin-bottom: 0;
+  }

@@ -3,7 +3,7 @@
   <nav>
     <div class="nav-wrapper teal">
       <a href="#" class="brand-logo">Mongo Scraper</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <ul class="hide-on-med-and-down">
         <li><a href="/">Home</a></li>
         <li><a href="/saved">Saved Articles</a></li>
       </ul>
@@ -12,13 +12,38 @@
 
   <div id="main-section">
     <h1 class="blue-grey-text text-darken-4">Mongo Scraper</h1>
-    <h4 class="blue-grey-text text-darken-4">Google News Edition</h4>
+    <h4 class="blue-grey-text text-darken-4">NPR News Edition</h4>
     <br>
     <a class="red waves-effect waves-light btn">Scrape New Articles</a>
     <a class="red waves-effect waves-light btn">Clear Articles</a>
   </div>
+  
+<div class="row no-articles">
+    <div class="col s12">
+      <div class="card teal">
+        <div class="card-content white-text">
+          <span class="card-title">Uh Oh. Looks like we don't have any new articles.</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <div class="row">
+  <div class="row article">
+    <div class="col s12">
+      <div class="card teal">
+        <div class="card-content white-text">
+          <span class="card-title">I am a very simple card. I am good at containing small bits of information.</span>
+          <p>I am a very simple card. I am good at containing small bits of information.
+            I am convenient because I require little markup to use effectively.</p>
+        </div>
+        <div class="card-action">
+          <a class="red waves-effect waves-light btn">Save Article</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row article">
     <div class="col s12">
       <div class="card teal">
         <div class="card-content white-text">
