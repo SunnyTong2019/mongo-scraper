@@ -21,7 +21,7 @@ app.set("view engine", "handlebars");
 
 // Routes
 // require("./routes/apiRoute")(app);
-// require("./routes/htmlRoute")(app);
+require("./routes/htmlRoute")(app);
 
 
 // Starting the server ------------------------------------/

@@ -1,0 +1,40 @@
+#main-section  {
+    height: 400px;
+    text-align: center;
+    padding: 50px;
+    position: relative;
+  }
+  
+#main-section ::after {
+    content: "";
+    background: url("https://spiritualityhealth.com/assets/images/Articles/_articleSummaryImage/readingpaper.jpg");
+    background-size: cover;
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+  }
+
+  .brand-logo {
+    margin-left: 20px;
+  }
+
+  #nav-mobile {
+    margin-right: 20px;
+  }
+
+  /* sticky footer */
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+  /* sticky footer */
+
