@@ -14,11 +14,11 @@
     <h1 class="blue-grey-text text-darken-4">Mongo Scraper</h1>
     <h4 class="blue-grey-text text-darken-4">NPR News Edition</h4>
     <br>
-    <a class="red waves-effect waves-light btn">Scrape New Articles</a>
+    <a id="scrape-btn" class="red waves-effect waves-light btn">Scrape New Articles</a>
     <a class="red waves-effect waves-light btn">Clear Articles</a>
   </div>
-  
-<div class="row no-articles">
+
+  <div class="row no-articles">
     <div class="col s12">
       <div class="card teal">
         <div class="card-content white-text">
@@ -28,34 +28,84 @@
     </div>
   </div>
 
-  <div class="row article">
-    <div class="col s12">
-      <div class="card teal">
-        <div class="card-content white-text">
-          <span class="card-title">I am a very simple card. I am good at containing small bits of information.</span>
-          <p>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively.</p>
-        </div>
-        <div class="card-action">
-          <a class="red waves-effect waves-light btn">Save Article</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div id="articles">
 
-  <div class="row article">
-    <div class="col s12">
-      <div class="card teal">
-        <div class="card-content white-text">
-          <span class="card-title">I am a very simple card. I am good at containing small bits of information.</span>
-          <p>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively.</p>
-        </div>
-        <div class="card-action">
-          <a class="red waves-effect waves-light btn">Save Article</a>
+    {{!-- <div class="row article">
+      <div class="col s12">
+        <div class="card teal">
+          <div class="card-content white-text">
+            <span class="card-title">I am a very simple card. I am good at containing small bits of information.</span>
+            <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+          </div>
+          <div class="card-action">
+            <a class="red waves-effect waves-light btn">Save Article</a>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="row article">
+      <div class="col s12">
+        <div class="card teal">
+          <div class="card-content white-text">
+            <span class="card-title">I am a very simple card. I am good at containing small bits of information.</span>
+            <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+          </div>
+          <div class="card-action">
+            <a class="red waves-effect waves-light btn">Save Article</a>
+          </div>
+        </div>
+      </div>
+    </div> --}}
+
   </div>
 
 </main>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+
+  $.getJSON("/articles", function (data) {
+
+    if (data.length > 0) {
+      $(".no-articles").css("display", "none");
+
+      for (var i = 0; i < data.length; i++) {
+        var div1 = $("<div>").addClass("row article");
+        var div2 = $("<div>").addClass("col s12");
+        var div3 = $("<div>").addClass("card teal");
+        var div31 = $("<div>").addClass("card-content white-text");
+        var aLink = $("<a>").attr("href", data[i].link);
+        var span = $("<span>").addClass("card-title white-text").text(data[i].title);
+        aLink.append(span);
+        var p = $("<p>").text(data[i].summary);
+        div31.append(aLink, p);
+        var div32 = $("<div>").addClass("card-action");
+        var aButton = $("<a>").addClass("red waves-effect waves-light btn").text("Save Article");
+        div32.append(aButton);
+        div3.append(div31, div32);
+        div2.append(div3);
+        div1.append(div2);
+        $("#articles").append(div1);
+      }
+    } else {
+      $(".no-articles").css("display", "block");
+    }
+  });
+
+
+  $("#scrape-btn").click(function(){
+    $.get("/scrape", function (data) {
+      location.reload();
+    })
+  })
+
+
+</script>
