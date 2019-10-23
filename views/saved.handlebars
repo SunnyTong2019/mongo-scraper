@@ -223,7 +223,7 @@
       var form = $("<form>");
       var div211 = $("<div>").addClass("row");
       var div2111 = $("<div>").addClass("input-field col l6 s12");
-      var textArea = $("<textarea>").addClass("materialize-textarea note-body");
+      var textArea = $("<textarea>").addClass("materialize-textarea note-body").attr("id", "add-note-for" + articleID);
       var addNoteBtn = $("<button>").addClass("add-note-btn btn waves-effect waves-light").attr("data-articleid", articleID).attr("type", "submit").text("Add");
       var div3 = $("<div>").addClass("modal-footer");
       var closeModalBtn = $("<a>").addClass("modal-action green modal-close waves-effect waves-green btn-flat").text("Close")
@@ -244,19 +244,16 @@
     event.preventDefault();
 
     var articleID = $(this).attr("data-articleid");
-    //console.log(articleID);
-    //console.log($(".note-body").val().trim())
-
+   
     $.ajax({
       method: "POST",
       url: "/savedArticles/" + articleID,
       data: {
-        body: $(".note-body").val().trim()
+        body: $("#add-note-for" + articleID).val().trim()
       }
     }).then(function (data) {
-      //$('#modal' + articleID).modal('close');
       location.reload();
-    });
+    }); 
 
   })
 
