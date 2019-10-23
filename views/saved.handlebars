@@ -14,11 +14,11 @@
     <h1 class="blue-grey-text text-darken-4">Saved Articles</h1>
     <h4 class="blue-grey-text text-darken-4">Your Saved Articles</h4>
     <br>
-    <a class="red waves-effect waves-light btn">Clear Articles</a>
+    <a id="clear-saved-btn" class="red waves-effect waves-light btn">Clear Articles</a>
   </div>
 
 
-<div class="row no-articles">
+<div id="no-saved-articles" class="row">
     <div class="col s12">
       <div class="card teal">
         <div class="card-content white-text">
@@ -28,7 +28,9 @@
     </div>
   </div>
 
-  <div class="row article">
+<div id="saved-articles"> 
+
+  {{!-- <div class="row article">
     <div class="col s12">
       <div class="card teal">
         <div class="card-content white-text">
@@ -58,7 +60,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
+
+</div>
 
   <!-- Modal forms -->
   <div id="modal1" class="modal">
@@ -102,3 +106,66 @@
   </div>
 
 </main>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+<script>
+
+$.getJSON("/savedArticles", function (data) {
+
+    if (data.length > 0) {
+      $("#no-saved-articles").css("display", "none");
+
+      for (var i = 0; i < data.length; i++) {
+        var div1 = $("<div>").addClass("row article");
+        var div2 = $("<div>").addClass("col s12");
+        var div3 = $("<div>").addClass("card teal");
+        var div31 = $("<div>").addClass("card-content white-text");
+        var articleLink = $("<a>").attr("href", data[i].link);
+        var span = $("<span>").addClass("card-title white-text").text(data[i].title);
+        articleLink.append(span);
+        var p = $("<p>").text(data[i].summary);
+        div31.append(articleLink, p);
+        var div32 = $("<div>").addClass("card-action");
+        var deleteSavedArticleBtn = $("<a>").addClass("delete-saved-btn red waves-effect waves-light btn").attr("data-articleid", data[i]._id).text("Delete From Saved");
+        var notesBtn = $("<a>").addClass("notes-btn red waves-effect waves-light btn").attr("data-articleid", data[i]._id).text("Article Notes");
+        div32.append(deleteSavedArticleBtn, notesBtn);
+        div3.append(div31, div32);
+        div2.append(div3);
+        div1.append(div2);
+        $("#saved-articles").append(div1);
+      }
+    } else {
+      $("#no-saved-articles").css("display", "block");
+    }
+  });
+
+    $("#clear-saved-btn").click(function () {
+    $.ajax({
+      url: "/savedArticles",
+      type: "DELETE",
+      success: function (data) {
+        location.reload();
+      }
+    });
+  })
+
+
+    $(document).on("click", ".delete-saved-btn", function () {
+    var articleID = $(this).attr("data-articleid");
+
+   $.ajax({
+      url: "/savedArticles/" + articleID,
+      type: "DELETE",
+      success: function (data) {
+        location.reload();
+      }
+    });
+  })
+
+  </script>
