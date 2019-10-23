@@ -31,6 +31,7 @@ module.exports = function (app) {
         });
     });
 
+
     app.get("/articles", function (req, res) {
         db.Article.find({})
             .then(function (dbArticles) {
@@ -41,6 +42,7 @@ module.exports = function (app) {
             });
     });
 
+
     app.delete("/articles", function (req, res) {
         db.Article.deleteMany({}, function (err) {
             if (err) throw err;
@@ -48,7 +50,8 @@ module.exports = function (app) {
         });
     });
 
-    app.post("/savedArticles/:id", function (req, res) {
+
+    app.post("/save/:id", function (req, res) {
         db.Article.findOne({ _id: req.params.id })
             .then(function (dbArticle) {
 
@@ -80,6 +83,7 @@ module.exports = function (app) {
             });
     });
 
+
     app.get("/savedArticles", function (req, res) {
         db.SavedArticle.find({})
             .then(function (dbSavedArticles) {
@@ -98,10 +102,47 @@ module.exports = function (app) {
         });
     });
 
+
     app.delete("/savedArticles/:id", function (req, res) {
-        db.SavedArticle.deleteOne({_id: req.params.id}, function (err) {
+        db.SavedArticle.deleteOne({ _id: req.params.id }, function (err) {
             if (err) throw err;
             res.send("Delete Complete");
+        });
+    });
+
+
+    app.post("/savedArticles/:id", function (req, res) {
+        console.log(req.body);
+
+        db.Note.create(req.body)
+            .then(function (dbNote) {
+                return db.SavedArticle.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbNote._id } }, { new: true });
+            })
+            .then(function (dbArticle) {
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
+
+
+    app.get("/savedArticles/:id", function (req, res) {
+        db.SavedArticle.findOne({ _id: req.params.id })
+            .populate("notes")
+            .then(function (dbArticle) {
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
+
+
+    app.delete("/notes/:id", function (req, res) {
+        db.Note.deleteOne({ _id: req.params.id }, function (err) {
+            if (err) throw err;
+            res.send("Delete Note Complete");
         });
     });
 };

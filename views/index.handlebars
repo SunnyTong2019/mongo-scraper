@@ -65,15 +65,15 @@
   <!-- Modal forms -->
   <div id="modal-saved" class="modal">
     <div class="modal-content">
-        <h2 class="green-text">Article is saved!
-        </h2>
+      <h2 class="green-text">Article is saved!
+      </h2>
     </div>
   </div>
 
   <div id="modal-already-saved" class="modal">
     <div class="modal-content">
-        <h2 class="red-text">Article is already saved!
-        </h2>
+      <h2 class="red-text">Article is already saved!
+      </h2>
     </div>
   </div>
 
@@ -122,6 +122,7 @@
     })
   })
 
+
   $("#clear-btn").click(function () {
     $.ajax({
       url: "/articles",
@@ -132,10 +133,11 @@
     });
   })
 
+
   $(document).on("click", ".save-article-btn", function () {
     var articleID = $(this).attr("data-articleid");
 
-    $.post("/savedArticles/" + articleID, function (data) {
+    $.post("/save/" + articleID, function (data) {
       if (data === "Article already saved") {
 
         show_modal("modal-already-saved");
@@ -148,6 +150,7 @@
     })
   })
 
+
   function show_modal(modalID) {
     $('#' + modalID).modal();
     $('#' + modalID).modal('open');
@@ -157,6 +160,5 @@
   function hide_modal(modalID) {
     $('#' + modalID).modal('close');
   }
-
 
 </script>

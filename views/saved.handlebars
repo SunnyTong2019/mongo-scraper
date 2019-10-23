@@ -18,7 +18,7 @@
   </div>
 
 
-<div id="no-saved-articles" class="row">
+  <div id="no-saved-articles" class="row">
     <div class="col s12">
       <div class="card teal">
         <div class="card-content white-text">
@@ -28,9 +28,9 @@
     </div>
   </div>
 
-<div id="saved-articles"> 
+  <div id="saved-articles">
 
-  {{!-- <div class="row article">
+    {{!-- <div class="row article">
     <div class="col s12">
       <div class="card teal">
         <div class="card-content white-text">
@@ -62,49 +62,76 @@
     </div>
   </div> --}}
 
-</div>
-
-  <!-- Modal forms -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <div class="note-card card-panel teal">
-        <span class="white-text">I am a very simple card. 
-          I am good at containing small bits of information.
-          I am a very simple card. 
-          I am good at containing small bits of information.
-        </span>
-         <a class="btn-floating red btn btn-small waves-effect waves-light remove-note-button">
-           <i class='material-icons'>delete</i>
-         </a>
-        </div>
-         <div class="note-card card-panel teal">
-        <span class="white-text">I am a very simple card. 
-          I am good at containing small bits of information.
-          I am a very simple card. 
-          I am good at containing small bits of information.
-        </span>
-         <a class="btn-floating red btn btn-small waves-effect waves-light remove-note-button">
-           <i class='material-icons'>delete</i>
-         </a>
-        </div>
-        <br>
-      <h5>Add a note: </h5>
-      <div class="row">
-        <form>
-          <div class="row">
-            <div class="input-field col l6 s12">
-              <textarea class="materialize-textarea"></textarea>
-            </div>
-          </div>
-          <a class="btn waves-effect waves-light">Add</a>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-    </div>
   </div>
 
+  <!-- Modal forms -->
+  <div id="notes-modals">
+
+    <!-- <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h5>Add a note: </h5>
+        <div class="row">
+          <form>
+            <div class="row">
+              <div class="input-field col l6 s12">
+                <textarea class="materialize-textarea note-body"></textarea>
+              </div>
+            </div>
+            {{!-- <a data-articleid="5dafdba7c6da4c0d69d603dc" class="add-note-btn btn waves-effect waves-light" type="submit">Add</a> --}}
+            <button data-articleid="5dafdba7c6da4c0d69d603dc" class="add-note-btn btn waves-effect waves-light"
+              type="submit">Add
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      </div>
+    </div> -->
+
+    <div id="modal2" class="modal">
+      <div class="modal-content">
+
+        <div class="note-card card-panel teal">
+          <span class="white-text">I am a very simple card.
+            I am good at containing small bits of information.
+            I am a very simple card.
+            I am good at containing small bits of information.
+          </span>
+          <a class="btn-floating red btn btn-small waves-effect waves-light remove-note-button">
+            <i class='material-icons'>delete</i>
+          </a>
+        </div>
+
+        <div class="note-card card-panel teal">
+          <span class="white-text">I am a very simple card.
+            I am good at containing small bits of information.
+            I am a very simple card.
+            I am good at containing small bits of information.
+          </span>
+          <a class="btn-floating red btn btn-small waves-effect waves-light remove-note-button">
+            <i class='material-icons'>delete</i>
+          </a>
+        </div>
+        <br>
+        <h5>Add a note: </h5>
+        <div class="row">
+          <form>
+            <div class="row">
+              <div class="input-field col l6 s12">
+                <textarea class="materialize-textarea"></textarea>
+              </div>
+            </div>
+            <a class="btn waves-effect waves-light">Add</a>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      </div>
+    </div>
+
+  </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -116,8 +143,7 @@
 
 <script>
 
-$.getJSON("/savedArticles", function (data) {
-
+  $.getJSON("/savedArticles", function (data) {
     if (data.length > 0) {
       $("#no-saved-articles").css("display", "none");
 
@@ -145,7 +171,8 @@ $.getJSON("/savedArticles", function (data) {
     }
   });
 
-    $("#clear-saved-btn").click(function () {
+
+  $("#clear-saved-btn").click(function () {
     $.ajax({
       url: "/savedArticles",
       type: "DELETE",
@@ -156,10 +183,10 @@ $.getJSON("/savedArticles", function (data) {
   })
 
 
-    $(document).on("click", ".delete-saved-btn", function () {
+  $(document).on("click", ".delete-saved-btn", function () {
     var articleID = $(this).attr("data-articleid");
 
-   $.ajax({
+    $.ajax({
       url: "/savedArticles/" + articleID,
       type: "DELETE",
       success: function (data) {
@@ -168,4 +195,82 @@ $.getJSON("/savedArticles", function (data) {
     });
   })
 
-  </script>
+
+  $(document).on("click", ".notes-btn", function () {
+    var articleID = $(this).attr("data-articleid");
+
+    $.getJSON("/savedArticles/" + articleID, function (data) {
+
+      console.log(data);
+
+      var div1 = $("<div>").addClass("modal").attr("id", "modal" + articleID);
+      var div2 = $("<div>").addClass("modal-content");
+
+      if (data.notes.length > 0) {
+        for (var i = 0; i < data.notes.length; i++) {
+          var divA = $("<div>").addClass("note-card card-panel teal");
+          var span = $("<span>").addClass("white-text").text(data.notes[i].body);
+          var deleteNoteBtn = $("<a>").addClass("btn-floating red btn btn-small waves-effect waves-light remove-note-button").attr("data-noteid", data.notes[i]._id);
+          var deleteIcon = $("<i>").addClass("material-icons").text("delete");
+          deleteNoteBtn.append(deleteIcon);
+          divA.append(span, deleteNoteBtn);
+          div2.append(divA);
+        }
+      }
+
+      var h5 = $("<h5>").text("Add a note:");
+      var div21 = $("<div>").addClass("row");
+      var form = $("<form>");
+      var div211 = $("<div>").addClass("row");
+      var div2111 = $("<div>").addClass("input-field col l6 s12");
+      var textArea = $("<textarea>").addClass("materialize-textarea note-body");
+      var addNoteBtn = $("<button>").addClass("add-note-btn btn waves-effect waves-light").attr("data-articleid", articleID).attr("type", "submit").text("Add");
+      var div3 = $("<div>").addClass("modal-footer");
+      var closeModalBtn = $("<a>").addClass("modal-action green modal-close waves-effect waves-green btn-flat").text("Close")
+      div3.append(closeModalBtn);
+      div2111.append(textArea);
+      div211.append(div2111);
+      form.append(div211, addNoteBtn);
+      div21.append(form);
+      div2.append($("<br>"), h5, div21);
+      div1.append(div2, div3);
+      $("#notes-modals").append(div1);
+      $('#modal' + articleID).modal().modal('open');
+    });
+  })
+
+
+  $(document).on("click", ".add-note-btn", function (event) {
+    event.preventDefault();
+
+    var articleID = $(this).attr("data-articleid");
+    //console.log(articleID);
+    //console.log($(".note-body").val().trim())
+
+    $.ajax({
+      method: "POST",
+      url: "/savedArticles/" + articleID,
+      data: {
+        body: $(".note-body").val().trim()
+      }
+    }).then(function (data) {
+      //$('#modal' + articleID).modal('close');
+      location.reload();
+    });
+
+  })
+
+
+  $(document).on("click", ".remove-note-button", function () {
+    var noteID = $(this).attr("data-noteid");
+
+    $.ajax({
+      url: "/notes/" + noteID,
+      type: "DELETE",
+      success: function (data) {
+        location.reload();
+      }
+    });
+  })
+
+</script>
