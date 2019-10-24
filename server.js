@@ -25,7 +25,6 @@ mongoose.connect("mongodb://localhost/mongoScraper", { useNewUrlParser: true });
 require("./routes/apiRoute")(app);
 require("./routes/htmlRoute")(app);
 
-
 // Starting the server ------------------------------------/
 app.listen(PORT, function () {
     console.log(
@@ -34,6 +33,5 @@ app.listen(PORT, function () {
         PORT
     );
 });
-
 
 module.exports = app;

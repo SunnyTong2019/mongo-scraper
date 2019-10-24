@@ -1,13 +1,13 @@
-#main-section  {
+.main-section  {
     height: 400px;
     text-align: center;
     padding: 50px;
     position: relative;
   }
   
-#main-section ::after {
+.main-section ::after {
     content: "";
-    background: url("https://spiritualityhealth.com/assets/images/Articles/_articleSummaryImage/readingpaper.jpg");
+    background: url("../images/readingpaper.jpg");
     background-size: cover;
     opacity: 0.2;
     top: 0;
@@ -60,7 +60,7 @@
     right: 5px;
   }
 
-  #no-articles,  #no-saved-articles {
+  #no-articles, #no-saved-articles {
     text-align: center;
     margin-bottom: 0;
   }

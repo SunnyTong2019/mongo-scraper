@@ -3,9 +3,10 @@ var cheerio = require("cheerio");
 var db = require("../models");
 
 module.exports = function (app) {
-
+    
+    // route to scrape articles from NPR website and save/add each article to Article collection
     app.get("/scrape", function (req, res) {
-        db.Article.deleteMany({}, function (err) {
+        db.Article.deleteMany({}, function (err) { // remove all old articles 
             if (err) throw err;
 
             axios.get("https://www.npr.org").then(function (response) {
@@ -18,7 +19,7 @@ module.exports = function (app) {
                     result.link = $(this).children("a").attr("href");
                     result.summary = $(this).children("a").children("p.teaser").text();;
 
-                    db.Article.create(result)
+                    db.Article.create(result) // then add new ones
                         .then(function (dbArticle) {
                             console.log(dbArticle);
                         })
@@ -31,7 +32,7 @@ module.exports = function (app) {
         });
     });
 
-
+    // route to get all scraped articles from Article collection
     app.get("/articles", function (req, res) {
         db.Article.find({})
             .then(function (dbArticles) {
@@ -42,7 +43,7 @@ module.exports = function (app) {
             });
     });
 
-
+    // route to clear/delete all scraped articles in Article collection
     app.delete("/articles", function (req, res) {
         db.Article.deleteMany({}, function (err) {
             if (err) throw err;
@@ -50,17 +51,17 @@ module.exports = function (app) {
         });
     });
 
-
+    // route to save article  
     app.post("/save/:id", function (req, res) {
-        db.Article.findOne({ _id: req.params.id })
+        db.Article.findOne({ _id: req.params.id }) // grab the article (that needs to be saved) from Article collection
             .then(function (dbArticle) {
 
-                db.SavedArticle.findOne({ title: dbArticle.title })
+                db.SavedArticle.findOne({ title: dbArticle.title }) // check if the article already exists in SavedArticle collection
                     .then(function (dbSavedArticle) {
 
-                        if (dbSavedArticle) {
+                        if (dbSavedArticle) { // if found, return "already saved"
                             res.send("Article already saved")
-                        } else {
+                        } else { // if not found, then add/insert to SavedArticle collection
                             var newArticle = {};
                             newArticle.title = dbArticle.title;
                             newArticle.link = dbArticle.link;
@@ -83,7 +84,7 @@ module.exports = function (app) {
             });
     });
 
-
+    // route to get all saved articles from SavedArticle collection
     app.get("/savedArticles", function (req, res) {
         db.SavedArticle.find({})
             .then(function (dbSavedArticles) {
@@ -94,7 +95,7 @@ module.exports = function (app) {
             });
     });
 
-
+    // route to clear/delete all saved articles in SavedArticle collection
     app.delete("/savedArticles", function (req, res) {
         db.SavedArticle.deleteMany({}, function (err) {
             if (err) throw err;
@@ -102,7 +103,7 @@ module.exports = function (app) {
         });
     });
 
-
+    // route to clear/delete ONE saved article in SavedArticle collection
     app.delete("/savedArticles/:id", function (req, res) {
         db.SavedArticle.deleteOne({ _id: req.params.id }, function (err) {
             if (err) throw err;
@@ -110,10 +111,8 @@ module.exports = function (app) {
         });
     });
 
-
+    // route to add a new note to a saved article
     app.post("/savedArticles/:id", function (req, res) {
-        console.log(req.body);
-
         db.Note.create(req.body)
             .then(function (dbNote) {
                 return db.SavedArticle.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbNote._id } }, { new: true });
@@ -126,7 +125,7 @@ module.exports = function (app) {
             });
     });
 
-
+    // route to get a saved article populated with all its notes
     app.get("/savedArticles/:id", function (req, res) {
         db.SavedArticle.findOne({ _id: req.params.id })
             .populate("notes")
@@ -138,7 +137,7 @@ module.exports = function (app) {
             });
     });
 
-
+    // route to delete a note for a saved article
     app.delete("/notes/:id", function (req, res) {
         db.Note.deleteOne({ _id: req.params.id }, function (err) {
             if (err) throw err;
