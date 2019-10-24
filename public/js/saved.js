@@ -59,7 +59,7 @@ $(document).on("click", ".notes-btn", function () {
   $.getJSON("/savedArticles/" + articleID, function (data) { // get that article that is populated with all the notes
 
     // build a modal form for that article
-    var div1 = $("<div>").addClass("modal").attr("id", "modal" + articleID);
+    var div1 = $("<div>").addClass("modal modal-fixed-footer").attr("id", "modal" + articleID);
     var div2 = $("<div>").addClass("modal-content");
 
     if (data.notes.length > 0) { // if the article has existing notes
@@ -73,23 +73,19 @@ $(document).on("click", ".notes-btn", function () {
         div2.append(divA);
       }
     }
-    
+
     // continue building the modal form, giving user ability to add a new note
     var h5 = $("<h5>").text("Add a note:");
-    var div21 = $("<div>").addClass("row");
     var form = $("<form>");
-    var div211 = $("<div>").addClass("row");
-    var div2111 = $("<div>").addClass("input-field col l6 s12");
+    var div21 = $("<div>").addClass("input-field col l6 s12");
     var textArea = $("<textarea>").addClass("materialize-textarea note-body").attr("id", "add-note-for" + articleID);
     var addNoteBtn = $("<button>").addClass("add-note-btn btn waves-effect waves-light").attr("data-articleid", articleID).attr("type", "submit").text("Add");
     var div3 = $("<div>").addClass("modal-footer");
     var closeModalBtn = $("<a>").addClass("modal-action green modal-close waves-effect waves-green btn-flat").text("Close")
     div3.append(closeModalBtn);
-    div2111.append(textArea);
-    div211.append(div2111);
-    form.append(div211, addNoteBtn);
-    div21.append(form);
-    div2.append($("<br>"), h5, div21);
+    div21.append(textArea);
+    form.append(div21, addNoteBtn);
+    div2.append($("<br>"), h5, form);
     div1.append(div2, div3);
     $("#notes-modals").append(div1);
 
