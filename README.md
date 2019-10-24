@@ -1,7 +1,7 @@
 # Mongo Scraper
 Mongo Scraper is a web app that lets users view the latest articles. The articles are scraped from NPR site.
 
-Users can also save articles and leave comments/notes on the articles displayed and revisit them later. 
+Users can also save articles and leave comments/notes on the articles and revisit them later. 
 
 Users can also delete comments/notes left on the articles. All stored comments/notes are visible to every user.
 
