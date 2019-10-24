@@ -20,6 +20,10 @@ It is created using Node.js with below npm packages:
 https://rocky-shelf-02690.herokuapp.com/
 
 
+## Motivation
+The purpose of this project was to practice CRUD in a full stack application using Mongoose.
+
+
 ## Contributor
 The app is developed by [SunnyTong2019](https://github.com/SunnyTong2019).
 
