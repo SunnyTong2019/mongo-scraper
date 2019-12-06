@@ -144,4 +144,12 @@ module.exports = function (app) {
             res.send("Delete Note Complete");
         });
     });
+
+    // route to update a note for a saved article
+    app.put("/notes/:id", function (req, res) {
+        db.Note.updateOne({ _id: req.params.id }, {body: req.body.note}, function (err) {
+            if (err) throw err;
+            res.send("Update Note Complete");
+        });
+    });
 };
