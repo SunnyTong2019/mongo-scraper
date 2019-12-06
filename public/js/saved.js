@@ -29,9 +29,7 @@ $(document).ready(function () {
     }
   });
 
-
-
-
+  // event listener for clearing all saved articles
   $("#clear-saved-btn").click(function () {
     $.ajax({
       url: "/savedArticles",
@@ -40,9 +38,9 @@ $(document).ready(function () {
         location.reload();
       }
     });
-  })
+  });
 
-
+  // event listener for deleting one saved article
   $(document).on("click", ".delete-saved-btn", function () {
     var articleID = $(this).attr("data-articleid");
 
@@ -53,8 +51,7 @@ $(document).ready(function () {
         location.reload();
       }
     });
-  })
-
+  });
 
   // when click Article Notes button
   $(document).on("click", ".notes-btn", function () {
@@ -62,7 +59,7 @@ $(document).ready(function () {
 
     $.getJSON("/savedArticles/" + articleID, function (data) { // get that article that is populated with all the notes
 
-      // build a modal form for that article
+      // build a modal form of notes for that article
       var div1 = $("<div>").addClass("modal modal-fixed-footer").attr("id", "modal" + articleID);
       var div2 = $("<div>").addClass("modal-content");
 
@@ -96,9 +93,9 @@ $(document).ready(function () {
       // finish building the modal form, now display/pop up the modal form
       $('#modal' + articleID).modal().modal('open');
     });
-  })
+  });
 
-
+  // event listener for adding new note
   $(document).on("click", ".add-note-btn", function (event) {
     event.preventDefault();
     var articleID = $(this).attr("data-articleid");
@@ -112,9 +109,9 @@ $(document).ready(function () {
     }).then(function (data) {
       location.reload();
     });
-  })
+  });
 
-
+  // event listener for updating note
   $(document).on("input", ".note-text-span", function () {
     var noteID = $(this).attr("data-noteid");
     var newNote = $(this).text();
@@ -126,9 +123,9 @@ $(document).ready(function () {
     }).then(function (data) {
         console.log(data);
       });
-  })
+  });
 
-
+  // event listener for deleting note
   $(document).on("click", ".remove-note-button", function () {
     var noteID = $(this).attr("data-noteid");
 
@@ -139,6 +136,6 @@ $(document).ready(function () {
         location.reload();
       }
     });
-  })
+  });
 
 });
