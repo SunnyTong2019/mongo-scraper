@@ -73,6 +73,11 @@ $(document).ready(function () {
           divA.append(span, deleteNoteBtn);
           div2.append(divA);
         }
+      } else { // if the article doesn't have any notes
+        var divA = $("<div>").addClass("note-card card-panel teal");
+        var span = $("<span>").addClass("white-text").text("No notes for this article yet.");
+        divA.append(span);
+        div2.append(divA);
       }
 
       // continue building the modal form, giving user ability to add a new note
@@ -121,8 +126,8 @@ $(document).ready(function () {
       method: 'PUT',
       data: { note: newNote }
     }).then(function (data) {
-        console.log(data);
-      });
+      console.log(data);
+    });
   });
 
   // event listener for deleting note
