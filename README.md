@@ -1,9 +1,9 @@
 # NPR Scraper
 NPR Scraper is a web app that lets users view the latest articles. The articles are scraped from NPR site.
 
-Users can also save articles and leave comments/notes on the articles and revisit them later. 
+Users can also save articles and leave notes on the articles and revisit them later. 
 
-Users can also delete comments/notes left on the articles. All stored comments/notes are visible to every user.
+Users can also update notes (by clicking the note to enter edit mode) and delete notes (using delete button) left on the articles. All stored notes are visible to every user.
 
 
 ## Technologies Used 
